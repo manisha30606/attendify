@@ -50,9 +50,10 @@ function SignUp() {
                             required
                         />
                     </div>
-                    <button type="submit" className="w-full bg-teal-500 text-white py-2 rounded-lg hover:bg-teal-600 transition duration-200">
+                    <Link to="/login"><button type="submit" className="w-full bg-teal-500 text-white py-2 rounded-lg hover:bg-teal-600 transition duration-200">
                         Sign Up
                     </button>
+                    </Link>
                     <div className="mt-2 text-center">
                         <span className="text-gray-600">Already Have an Account</span>
                         <Link to="/login" className="text-teal-700 hover:underline ml-1">Login</Link>
