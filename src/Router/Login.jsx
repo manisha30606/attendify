@@ -42,9 +42,10 @@ function Login() {
                             required
                         />
                     </div>
-                    <button type="submit" className="w-full bg-teal-500 text-white py-2 rounded-lg hover:bg-teal-600 transition duration-200">
-                        SIGN IN
+                    <Link to="/login/home"><button type="submit" className="w-full bg-teal-500 text-white py-2 rounded-lg hover:bg-teal-600 transition duration-200">
+                        Login
                     </button>
+                    </Link>
                     <div className="mt-2 text-center">
                         <span className="text-gray-600">Don't have an account?</span>
                         <Link to="/signup" className="text-teal-700 hover:underline ml-1">Sign up</Link>
