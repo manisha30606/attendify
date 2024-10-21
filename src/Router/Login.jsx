@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
+import '../App.css';
 
 function Login() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -12,9 +12,24 @@ function Login() {
     };
 
     return (
-        <div className="flex items-center justify-center min-h-screen bg-gradient-to-b from-white-300 to-green-500">
-            <div className="bg-white p-8 rounded-lg shadow-lg max-w-md w-full">
-                <h2 className="text-2xl font-semibold text-center text-teal-700 mb-6">Login</h2>
+        <div className=" bg-[#071952] flex items-center justify-center min-h-screen bg-gradient-to-b from-white-300 to-green-500">
+            
+            <div className="icon absolute icon1 w-[100px] h-[100px] bg-[#EBF4F6]"></div>
+            <div className="icon absolute icon2 w-[100px] h-[100px] bg-[#EBF4F6]"></div>
+            <div className="icon absolute icon3 w-[100px] h-[100px] bg-[#EBF4F6]"></div>
+            <div className="icon absolute icon4 w-[100px] h-[100px] bg-[#EBF4F6]"></div>
+            <div className="icon absolute icon5 w-[100px] h-[100px] bg-[#EBF4F6]"></div>
+            <div className="icon absolute icon6 w-[100px] h-[100px] bg-[#EBF4F6]"></div>
+            <div className="icon absolute icon7 w-[100px] h-[100px] bg-[#EBF4F6]"></div>
+            <div className="icon absolute icon8 w-[100px] h-[100px] bg-[#EBF4F6]"></div>
+            <div className="icon absolute icon9 w-[100px] h-[100px] bg-[#EBF4F6]"></div>
+            
+            <div 
+                className="bg-white p-8 rounded-lg shadow-[0_4px_30px_rgba(236,72,153,0.8)] max-w-md w-full 
+                           transform transition duration-500 hover:scale-105 
+                           hover:shadow-[0_4px_30px_rgba(236,72,153,0.8)] hover:bg-white"
+            >
+                <h2 className="text-2xl text-center font-bold text-[#37B7C3] mb-6">Login</h2>
                 <form onSubmit={handleSubmit}>
                     <div className="mb-4">
                         <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="email">
@@ -25,7 +40,7 @@ function Login() {
                             id="email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
                             required
                         />
                     </div>
@@ -34,21 +49,32 @@ function Login() {
                             Password
                         </label>
                         <input
-                            type={showPassword ? "text" : "password"}
+                            type="password"
                             id="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-400"
+                            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-pink-400"
                             required
                         />
                     </div>
-                    <Link to="/login/home"><button type="submit" className="w-full bg-teal-500 text-white py-2 rounded-lg hover:bg-teal-600 transition duration-200">
-                        Login
-                    </button>
-                    </Link>
-                    <div className="mt-2 text-center">
-                        <span className="text-gray-600">Don't have an account?</span>
-                        <Link to="/signup" className="text-teal-700 hover:underline ml-1">Sign up</Link>
+                    <div className="flex justify-between">
+                        <Link to="/login/home">
+                            <button
+                                type="submit"
+                                className="bg-white text-black py-2 px-6 rounded-lg shadow-lg hover:bg-[#37B7C3] hover:text-white hover:shadow-xl transition duration-200 flex items-center"
+                            >
+                                Login Now <span className="ml-2">→</span>
+                            </button>
+                        </Link>
+
+                        <Link to="/signup">
+                            <button
+                                type="button"
+                                className="bg-white text-black py-2 px-6 rounded-lg shadow-lg hover:bg-[#37B7C3] hover:text-white hover:shadow-xl transition duration-200 flex items-center"
+                            >
+                                Sign Up Now <span className="ml-2">→</span>
+                            </button>
+                        </Link>
                     </div>
                 </form>
             </div>
