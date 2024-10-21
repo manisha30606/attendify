@@ -20,7 +20,7 @@ const Dashboard = () => {
                     <MakeAttendance/>
                 </aside>
 
-                {/* Main Content */}
+             
                 <main className="w-[100%] md:w-[70%] bg-slate-800 p-4">
                     <h2>Right</h2>
                     <p>Here Come from components one by one by clicking the Menu</p>
