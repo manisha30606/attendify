@@ -1,0 +1,191 @@
+const signup = async (req, res) => {
+    try {
+        const { name, email, phone, empId, password } = req.body;
+        const user = await UserModel.findOne({ empId });
+
+        if (user) {
+            return res.status(409).json({
+                message: 'User already exists, please login.',
+                success: false
+            });
+        }
+
+        const hashedPassword = await bcrypt.hash(password, 10); // Using 10 rounds for bcrypt
+        const newUser = new UserModel({
+            name,
+            email,
+            phone,
+            empId,
+            password: hashedPassword
+        });
+
+        await newUser.save();
+        res.status(201).json({
+            message: "Signup successful",
+            success: true
+        });
+    } catch (err) {
+        console.error('Signup Error: ', err); // Log the error for debugging
+        res.status(500).json({
+            message: "Internal server error",
+            success: false
+        });
+    }
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+const handleSignup = async (e) => {
+     
+        e.preventDefault();
+
+        const { name, email, phone, empId, password } = signupInfo;
+
+        if (!name || !email || !password || !phone || !empId) {
+            return handleError('All fields are required');
+        }
+
+        try {
+            const url = `http://localhost:8000/auth/signup`;
+            const response = await fetch(url, {
+                method: "POST",
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(signupInfo)
+            });
+
+            if (!response.ok) {
+                const result = await response.json();
+                throw new Error(result.message || "Signup failed, please try again.");
+            }
+
+            const result = await response.json();
+            const { success, message } = result;
+
+            if (success) {
+                handleSuccess(message);
+                navigate('/login'); 
+            } else {
+                handleError(message || "Signup failed");
+            }
+        } catch (err) {
+            handleError(err.message || "An unexpected error occurred");
+        }
+    };
+
+
+
+
+
+import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import AdminModel from '../Models/Admin.js';
+import dotenv from 'dotenv';
+dotenv.config();
+
+export const adminSignup = async (req, res) => {
+    
+
+    try {
+        const { admName, admEmail, admDepartment, admId, admPassword } = req.body;
+
+        // Validate input fields
+        if (!admName || !admEmail || !admDepartment || !admId || !admPassword) {
+            return res.status(400).json({ message: "All fields are required", success: false });
+        }
+
+        // Check if user already exists
+        const user = await AdminModel.findOne({ admId });
+        if (user) {
+            return res.status(409).json({
+                message: 'User already exists, please login.',
+                success: false
+            });
+        }
+
+        // Hash password and create new user
+        const hashedPassword = await bcrypt.hash(admPassword, 10);
+        const newUser = new AdminModel({
+            admName,
+            admEmail,
+            admDepartment,
+            admId,
+            admPassword: hashedPassword
+        });
+
+        await newUser.save();
+
+        // Return success response
+        res.status(201).json({
+            message: 'Signup successful!',
+            success: true
+        });
+    } catch (err) {
+        console.error('Signup Error:', err);
+        res.status(500).json({
+            message: 'Internal server error',
+            success: false
+        });
+    }
+};
+
+export const adminLogin = async (req, res) => {
+    const { admEmail, admPassword } = req.body;
+
+    try {
+        const admin = await AdminModel.findOne({ admEmail });
+        if (!admin) {
+            return res.status(404).json({ message: 'Admin not found' });
+        }
+
+        const isMatch = await bcrypt.compare(admPassword, admin.admPassword);
+        if (!isMatch) {
+            return res.status(401).json({ message: 'Invalid credentials' });
+        }
+
+        // Generate JWT token
+        const token = jwt.sign(
+            { id: admin._id, admEmail: admin.admEmail },
+            process.env.JWT_SECRET,
+            { expiresIn: '1h' }
+        );
+        res.json({ message: 'Login successful', token });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error', error: error.message });
+    }
+};
+
+
+Employee
+
+{
+    "empName": "Rakesh kumar",
+      "empEmail" : "rakesh12@gmail.com",
+      "empId": "Rakesh70",
+  "empPhone" : "7865465889",
+       "empPassword": "120856"
+   
+    
+}
+
+Admin
+
+{
+ 
+    "admEmail": "error123@gmail.com",
+    "admPassword": "123456"
+}
+
+
+

@@ -35,7 +35,7 @@ const Front = () => {
               Attendity is a user-friendly employee attendance system designed to simplify time tracking and absence management. With real-time monitoring and automated reports, it streamlines administrative tasks and improves transparency. Empower your organization with Attendity for effortless attendance management.
               </p>
               <div className='mt-6 md:mt-10 sm:space-x-4'>
-                <Link to='./login'>
+                <Link to='/home'>
                   <button className='bg-[#071952] mr-4 text-white rounded mb-4 py-2 px-6 font-medium inline-block hover:bg-transparent hover:border-[#071952] hover:text-[#071952] duration-300 hover:border border border-transparent'>
                     Start Now ➡️
                   </button>
