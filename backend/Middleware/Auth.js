@@ -1,4 +1,4 @@
-import jwt from 'jsonwebtoken'; // If using ESM (ECMAScript Modules)
+import jwt from 'jsonwebtoken'; 
 
 const ensureAuthenticated = (req, res, next) => {
     const auth = req.headers['authorization'];
@@ -16,4 +16,4 @@ const ensureAuthenticated = (req, res, next) => {
     }
 };
 
-export default ensureAuthenticated; // Export as default
+export default ensureAuthenticated; 
