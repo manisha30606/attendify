@@ -1,29 +1,40 @@
-import React from 'react';
-import { Route, Routes } from 'react-router-dom';
+import React from "react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Front from "./Router/Front";
-import Login from "./Router/Login";
-import SignUp from './Router/Signup';
-import Home from "./Router/dashBoard"
-// import { useState } from 'react';
-// import RefrshHandler from './RefrshHandler';
+import EmpDashboard from "./Router/EmpDashBoard";
+import EmpLogin from "./Router/EmpLogin";
+import EmpSignup from "./Router/EmpSignup";
+import Home from "./Router/Home";
+import AdminLogin from "./Router/AdminLogin";
+import AdminSignup from "./Router/AdminSignup";
+import AdminDash from "./Router/AdminDashboard";
+
+
 function App() {
+  return (
+    // Wrap the entire application with AccessProvider
+    <>
+   {/* <AccessProvider> */}
+      <div className="App">
+        <Routes>
+          {/* General Routes */}
+          <Route path="/" element={<Front />} />
+          <Route path="/home" element={<Home />} />
 
-// const [isAuthenticated, setIsAuthenticated] = useState(false);
+          {/* Employee Routes */}
+          <Route path="/EmpLogin" element={<EmpLogin />} />
+          <Route path="/EmpSignup" element={<EmpSignup />} />
+          <Route path="/EmpDash" element={<EmpDashboard />} />
 
-//     const PrivateRoute = ({ element }) => {
-//       return isAuthenticated ? element : <Navigate to="/login" />
-//     }
-    return (
-        <div className="App">
-             {/* <RefrshHandler setIsAuthenticated={setIsAuthenticated} /> */}
-            <Routes>
-                <Route path="/" element={<Front />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/signup" element={<SignUp />} />
-                <Route path="/login/home" element={<Home/>} />
-            </Routes>
-        </div>
-    );
+          {/* Admin Routes */}
+          <Route path="/AdminLogin" element={<AdminLogin />} />
+          <Route path="/AdminSignup" element={<AdminSignup />} />
+          <Route path="/AdminDash" element={<AdminDash />} />
+        </Routes>
+      </div>
+    {/* </AccessProvider> */}
+    </>
+  );
 }
 
 export default App;
