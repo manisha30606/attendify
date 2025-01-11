@@ -5,10 +5,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 function AdminSignup() {
-  const [admSignupInfo, setadmSignUpInfo] = useState({
+  const [admSignupInfo, setAdmSignUpInfo] = useState({
     admName: "",
     admEmail: "",
-    admDepartment: "",
+    admGender: "",
     admId: "",
     admPassword: "",
   });
@@ -17,27 +17,26 @@ function AdminSignup() {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setadmSignUpInfo((prev) => ({ ...prev, [name]: value }));
+    setAdmSignUpInfo((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSignup = async (e) => {
     e.preventDefault();
 
-    const { admName, admEmail, admDepartment, admId, admPassword } = admSignupInfo;
+    const { admName, admEmail, admGender, admId, admPassword } = admSignupInfo;
 
     // Frontend validation
-    if (!admName || !admEmail || !admPassword || !admDepartment || !admId) {
+    if (!admName || !admEmail || !admPassword || !admGender || !admId) {
       toast.error("All fields are required");
       return;
     }
 
     try {
-      const url = "http://localhost:8000/auth/signup/admin";
+      const url = "http://localhost:8080/auth/signup/admin";
       const response = await fetch(url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(admSignupInfo),
-
       });
 
       const result = await response.json();
@@ -71,8 +70,8 @@ function AdminSignup() {
           {/* Form Inputs */}
           {[
             { label: "Name of Admin", name: "admName", type: "text" },
-            { label: "admEmail of Admin", name: "admEmail", type: "admEmail" },
-            { label: "Department", name: "admDepartment", type: "text" },
+            { label: "Email of Admin", name: "admEmail", type: "email" }, // Fixed type
+            { label: "Gender", name: "admGender", type: "text" },
             { label: "Admin ID", name: "admId", type: "text" },
             { label: "Password", name: "admPassword", type: "password" },
           ].map(({ label, name, type }) => (
