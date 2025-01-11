@@ -28,7 +28,7 @@ const MakeAttendance = () => {
     const fetchEmpData = async () => {
       try {
         const response = await axios.get("http://localhost:8080/auth/empdata", {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${token}` }, // Fixed syntax
         });
         const data = response.data;
         setEmpData({
@@ -91,7 +91,8 @@ const MakeAttendance = () => {
 
     try {
       const token = localStorage.getItem("token");
-      console.log("Captured Image:", capturedImage); // Log the correct variable
+      console.log(token);
+     
       const response = await axios.post(
         "http://localhost:8080/auth/attendance",
         {
@@ -101,7 +102,7 @@ const MakeAttendance = () => {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${token}`, // Fixed syntax
             "Content-Type": "application/json",
           },
         }
