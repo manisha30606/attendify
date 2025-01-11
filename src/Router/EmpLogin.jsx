@@ -34,13 +34,13 @@ function EmpLogin() {
     }
 
     try {
-      const url = `http://localhost:8000/auth//login/employee`;
+      const url = "http://localhost:8080/auth/login/employee"; // Corrected URL
       const response = await fetch(url, {
         method: "POST",
         headers: {
-          "Content-Type": "application/json"
+          "Content-Type": "application/json",
         },
-        body: JSON.stringify({ empName, empId, empPassword })
+        body: JSON.stringify({ empName, empId, empPassword }),
       });
 
       const result = await response.json();
@@ -51,6 +51,7 @@ function EmpLogin() {
         if (success) {
           handleSuccess(message || "Login successful");
           localStorage.setItem("token", jwtToken);
+          localStorage.setItem("empName", empName); // Save empName correctly
           setTimeout(() => {
             navigate("/EmpDash");
           }, 1000);
@@ -58,8 +59,8 @@ function EmpLogin() {
           handleError(message || "Login failed");
         }
       } else {
-    
-        const errorMessage = result.error?.details?.[0]?.message || result.message || "Invalid credentials";
+        const errorMessage =
+          result.error?.details?.[0]?.message || result.message || "Invalid credentials";
         handleError(errorMessage);
       }
     } catch (err) {
