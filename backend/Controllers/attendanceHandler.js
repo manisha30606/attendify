@@ -78,10 +78,29 @@ const attendanceHandler = async (req, res) => {
         }
 
         // Validate location
-        const officeLocation = { latitude: 25.5940947, longitude: 85.1375645 };
- // Example location
+    //     const officeLocation = { latitude: 22.0495779, longitude: 88.0669587 }; 
+    //     const isWithinRange = geolib.isPointWithinRadius(
+    //         { latitude, longitude },
+    //         officeLocation,
+    //         1000 // 1 km radius
+    //     );
+
+    //     if (!isWithinRange) {
+    //         return res.status(400).json({ message: "Location is outside the permitted range." });
+    //     }
+
+    //     res.status(200).json({ message: "Attendance marked successfully." });
+    // } catch (error) {
+    //     console.error("Error in attendance handler:", error.message);
+    //     res.status(500).json({ message: "Server error." });
+    // }
+
+
+    const officeLocation = { latitude: 22.0495786, longitude: 88.0669577 }; 
+        
+        // Check if the provided location is within a 1 km radius of the office location
         const isWithinRange = geolib.isPointWithinRadius(
-            { latitude, longitude },
+            { latitude: parseFloat(latitude), longitude: parseFloat(longitude) },
             officeLocation,
             1000 // 1 km radius
         );
@@ -90,7 +109,7 @@ const attendanceHandler = async (req, res) => {
             return res.status(400).json({ message: "Location is outside the permitted range." });
         }
 
-        res.status(200).json({ message: "Attendance marked successfully." });
+        res.status(200).json({ message: "Location matched. Attendance marked successfully." });
     } catch (error) {
         console.error("Error in attendance handler:", error.message);
         res.status(500).json({ message: "Server error." });
