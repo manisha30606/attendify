@@ -8,6 +8,7 @@ import { Server } from 'socket.io';
 import AuthRouter from './Routes/AuthRouter.js';   
 import bodyParser from 'body-parser';
 import fs from 'fs';
+
 // import AdminRouter from './Routes/AdminRoutes.js'; 
 import './Models/db.js';  
 
@@ -60,6 +61,8 @@ app.post('/signup/employee/', upload.single('empPhoto'), (req, res) => {
     res.status(500).send({ message: 'Server error' });
   }
 });
+
+
 
 
 // Middleware

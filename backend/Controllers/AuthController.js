@@ -57,10 +57,10 @@ dotenv.config();
 
 export const empSignup = async (req, res) => {
     try {
-        const { empName, empEmail, empPhone, empId, empPassword, empPhoto } = req.body;
+        const { empName, empEmail, empPhone, empId, empPassword, empPhoto ,empGender} = req.body;
 
         // Validate input
-        if (!empName || !empEmail || !empPhone || !empId || !empPassword || !empPhoto) {
+        if (!empName || !empEmail || !empPhone || !empId || !empPassword || !empPhoto || !empGender) {
             return res.status(400).json({ message: "All fields are required", success: false });
         }
 
@@ -85,7 +85,8 @@ export const empSignup = async (req, res) => {
             empPhone,
             empId,
             empPassword: hashedPassword,
-            empPhoto: photoPath, // Save file path to DB
+            empPhoto: photoPath, 
+            empGender,
         });
 
         await newUser.save();
@@ -147,11 +148,11 @@ export const empLogin = async (req, res) => {
 
 export const adminSignup = async (req, res) => {
     try {
-        const { admName, admEmail, admDepartment, admId, admPassword } = req.body;
+        const { admName, admEmail,admId, admPassword ,admGender} = req.body;
        
 
         // Additional input validation
-        if (!admName || !admEmail || !admDepartment || !admId || !admPassword) {
+        if (!admName || !admEmail || !admId || !admPassword || !admGender) {
             return res.status(400).json({
                 message: "All fields are required.",
                 success: false,
@@ -177,9 +178,9 @@ export const adminSignup = async (req, res) => {
         const newAdmin = new AdminModel({
             admName,
             admEmail,
-            admDepartment,
             admId,
             admPassword: hashedPassword,
+            admGender,
         });
 
         await newAdmin.save();

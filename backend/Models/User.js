@@ -4,6 +4,7 @@ const { Schema } = mongoose;
 // Employee Schema
 const EmployeeSchema = new Schema({
     empName: { type: String, required: true, trim: true },
+    empGender: { type: String, required: true, trim: true },
     empEmail: { 
         type: String, 
         required: [true, "Email is required"], 
@@ -45,8 +46,8 @@ EmployeeSchema.set('toJSON', {
 // Admin Schema
 const AdminSchema = new Schema({
     admName: { type: String, required: true, trim: true },
-    admDepartment: { type: String, required: true, trim: true },
     admId: { type: String, required: true, trim: true },
+    admGender: { type: String, required: true, trim: true },
     admEmail: { 
         type: String, 
         required: [true, "Email is required"], 
@@ -60,7 +61,8 @@ const AdminSchema = new Schema({
             message: props => `${props.value} is not a valid email!`
         }
     },
-    admPassword: { type: String, required: true }
+    admPassword: { type: String, required: true },
+    admStatus: { type: String, required: true, default: "OFF" },
 });
 
 // Apply toJSON transformation to AdminSchema
