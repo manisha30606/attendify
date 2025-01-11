@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"; // Added missing useEffect import
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Attendance from "../components/Attendance";
 import Leave from "../components/Leave";
@@ -11,44 +11,25 @@ import { RiLogoutCircleRLine } from "react-icons/ri";
 import { handleError, handleSuccess } from "../utils";
 import { ToastContainer } from "react-toastify";
 
-
 const Dashboard = () => {
   const [activeComponent, setActiveComponent] = useState("attendance");
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
   const [loggedInUser, setLoggedInUser] = useState("");
-  const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    setLoggedInUser(localStorage.getItem("loggedInUser") || "Guest"); // Handles null values gracefully
+    const empName = localStorage.getItem("empName");
+    setLoggedInUser(empName || "Guest"); // Fallback to "Guest" if empName is null
   }, []);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
-    localStorage.removeItem("loggedInUser");
+    localStorage.removeItem("empName");
     handleSuccess("User Logged Out");
     setTimeout(() => {
       navigate("/home");
     }, 1000);
   };
-
-  const fetchProducts = async () => {
-    try {
-      const url = "https://deploy-mern-app-1-api.vercel.app/products";
-      const headers = {
-        Authorization: localStorage.getItem("token"),
-      };
-      const response = await fetch(url, { headers }); // Fixed header placement
-      const result = await response.json();
-      setProducts(result);
-    } catch (err) {
-      handleError(err);
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
 
   const renderComponent = () => {
     switch (activeComponent) {
@@ -67,18 +48,20 @@ const Dashboard = () => {
 
   return (
     <section>
-
-      <div className="flex flex-col md:flex-row mb:2.5rem text-gray-50">
+      <div className="flex flex-col md:flex-row mb-2.5rem text-gray-50">
         {/* Toggle Button for Mobile View */}
         <button
           className="md:hidden fixed top-3 left-3 z-50 bg-[#15156a] text-white p-2 rounded"
           onClick={() => setIsMenuOpen(!isMenuOpen)}
+          aria-expanded={isMenuOpen ? "true" : "false"}
+          aria-controls="sidebar"
         >
           {isMenuOpen ? <FiX size={20} /> : <FiMenu size={20} />}
         </button>
 
         {/* Sidebar */}
         <aside
+          id="sidebar"
           className={`fixed left-0 top-0 h-screen border-r pt-10 px-4 bg-[#071952] transition-transform duration-300 ${
             isMenuOpen ? "translate-x-0" : "-translate-x-full"
           } md:translate-x-0`}
