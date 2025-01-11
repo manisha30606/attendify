@@ -31,6 +31,15 @@ const signupValidation = (req, res, next) => {
                 "string.min": "Employee name must be at least 3 characters long.",
                 "string.max": "Employee name must not exceed 100 characters."
             }),
+            empGender: Joi.string()
+            .min(4)
+            .max(10)
+            .required()
+            .messages({
+                "string.empty": "Employee gender is required.",
+                "string.min": "Employee gender must be at least 3 characters long.",
+                "string.max": "Employee gender must not exceed 100 characters."
+            }),
         empEmail: Joi.string()
             .email()
             .required()
@@ -103,7 +112,7 @@ const loginValidation = (req, res, next) => {
 const adminSignupValidation = (req, res, next) => {
     const schema = Joi.object({
         admName: Joi.string().min(3).max(100).required(),
-        admDepartment: Joi.string().min(2).max(50).required(),
+        admGender: Joi.string().min(4).max(10).required(),
         admId: Joi.string().min(3).max(50).required(), // Validating the admId field
         admEmail: Joi.string().email().required(),
         admPassword: Joi.string().min(6).max(12).required(),
