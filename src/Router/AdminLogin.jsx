@@ -17,18 +17,25 @@ function AdminLogin() {
     setAdmLoginInfo((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleError = (message) => {
+    toast.error(message);
+  };
+
   const handleLogin = async (e) => {
     e.preventDefault();
     const { admEmail, admPassword } = admLoginInfo;
 
     // Basic validation
     if (!admEmail || !admPassword) {
-      toast.error("All fields are required.");
-      return;
+      return handleError("All fields are required");
+    }
+
+    if (admPassword.length < 6) {
+      return handleError("Password must be at least 6 characters long");
     }
 
     try {
-      const url = "http://localhost:8000/auth/login/admin"; // Make sure this URL is correct
+      const url = "http://localhost:8080/auth/login/admin"; // Ensure this URL is correct
       const response = await fetch(url, {
         method: "POST",
         headers: {
@@ -40,18 +47,22 @@ function AdminLogin() {
       const result = await response.json();
 
       if (!response.ok) {
-        // Display error returned from backend
-        const errorMessage = result.error || result.message || "Login failed.";
-        toast.error(errorMessage);
+        console.error("Login failed", result);
+        toast.error(result.error || result.message || "Login failed.");
         return;
       }
 
-      const { message, token } = result;
-
+      const { message, token, admName } = result;
       toast.success(message);
-      localStorage.setItem("token", token); // Save token for authenticated routes
-      navigate("/AdminDash"); // Redirect on successful login
+
+      // Store token and admin name in localStorage
+      localStorage.setItem("token", token); 
+      localStorage.setItem("admName", admName);
+
+      // Redirect to admin dashboard
+      navigate("/AdminDash");
     } catch (err) {
+      console.error("An unexpected error occurred", err);
       toast.error("An unexpected error occurred.");
     }
   };
@@ -103,6 +114,7 @@ function AdminLogin() {
               required
             />
           </div>
+
           <div className="flex justify-between">
             <button
               type="submit"
